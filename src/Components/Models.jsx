@@ -4,23 +4,32 @@ Command: npx gltfjsx@6.1.4 Buoy-draco.glb
 */
 
 import React, { useState } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { Box } from '@react-three/drei'
 import { Buoy } from './Buoy-draco'
-import {RescueBoat} from './Rescue-boat-draco'
+import { RescueBoat } from './Rescue-boat-draco'
 
 export const Models = (props) => {
-  const handleSelectedData = (value)=> {
+  const handleSelectedData = (value) => {
     props.selectedContent(value)
   }
-  const handleClickMeshA = (value) => {   
+  const handleClickMeshA = (value) => {
     props.clickMesh(value)
   }
   return (
     <React.Fragment>
-      <Buoy  scale={[0.8,0.8,0.8]} position={[-2,0,0]} data={handleSelectedData} clickMesh={handleClickMeshA} />
-      <RescueBoat scale={[10,10,10]} position={[2,0,0]} data={handleSelectedData} clickMesh={handleClickMeshA}/>
-      {/* <Buoy data={setSelectedData("B")} clickMesh={handleClickMeshB} /> */}
+      <Buoy
+        scale={[5, 5, 5]}
+        position={[-5, 5, 0]}
+        data={handleSelectedData}
+        clickMesh={handleClickMeshA}
+      />
+      <RescueBoat
+        scale={[50, 50, 50]}
+        position={[5, 1, 0]}
+        data={handleSelectedData}
+        clickMesh={handleClickMeshA}
+      />
+     
     </React.Fragment>
   )
 }
-

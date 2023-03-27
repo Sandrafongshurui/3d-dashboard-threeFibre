@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.1.4 Buoy-draco.glb
 */
 
 import React, { useState, useEffect } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, Box, Plane } from '@react-three/drei'
 import Axios from 'axios'
 
 export function Buoy(props) {
@@ -42,6 +42,7 @@ export function Buoy(props) {
     <>
       <group
         {...props}
+        rotation={[-Math.PI / 2, 0, 0]}
         dispose={null}
         onPointerDown={(e) => {
           e.stopPropagation()
@@ -50,53 +51,90 @@ export function Buoy(props) {
           props.clickMesh(!selected)
         }}
       >
-        <group rotation={[-Math.PI / 2, 0, 0]}>
+        
+        <spotLight
+          castShadow
+          intensity={1}
+          args={['blue', 1, 100]}
+          position={[-1, 1, 1]}
+        />
+        {/* <group rotation={[-Math.PI / 2, 0, 0]}> */}
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Circle03.geometry}
             material={materials.orange_glass}
             position={[0, 0, 1.38]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Line02.geometry}
             material={materials.gold}
             position={[0, 0, 0.7]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Object01.geometry}
             material={materials.aluminium_orange}
             position={[0, 0, 1.31]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Object02.geometry}
             material={materials.aluminium_orange}
             position={[0, 0, 0.92]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Rectangle01.geometry}
             material={materials.gold}
             position={[0, 0, 0.75]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Line03.geometry}
             material={materials.aluminium_orange}
             position={[0, 0, 0.31]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Circle02.geometry}
             material={materials.aluminium_orange}
             position={[0, 0, 1.44]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Object03.geometry}
             material={materials.aluminium_orange}
             position={[0, 0, 1.02]}
           />
           <mesh
+            castShadow
+            receiveShadow
             geometry={nodes.Rectangle02.geometry}
             material={materials.aluminium_orange}
             position={[0, 0, 0.72]}
           />
-        </group>
+          <mesh castShadow receiveShadow position={[0, 0.5, 1]}>
+            <boxGeometry />
+            <meshStandardMaterial attach="material" color="white" />
+          </mesh>
+          <Plane
+            receiveShadow
+            // rotation={[-Math.PI / 2, 0, 0]}
+            // position={[0, -1, 0]}
+            args={[1000, 1000]}
+          >
+            <meshStandardMaterial attach="material" color="white" />
+          </Plane>
+        {/* </group> */}
       </group>
     </>
   )
