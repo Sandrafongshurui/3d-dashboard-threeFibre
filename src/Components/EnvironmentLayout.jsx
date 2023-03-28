@@ -15,6 +15,9 @@ import {
   Box,
   Plane,
   ContactShadows,
+  Sphere,
+  useEnvironment,
+  Environment
 } from "@react-three/drei";
 import React, { Suspense, useState, useRef, useMemo } from "react";
 import { Models } from "./Models";
@@ -52,7 +55,9 @@ const Ocean = () => {
     }),
     [waterNormals]
   );
-  useFrame((state, delta) => (ref.current.material.uniforms.time.value += 0.01))
+  useFrame(
+    (state, delta) => (ref.current.material.uniforms.time.value += 0.01)
+  );
   return (
     <water
       ref={ref}
@@ -65,6 +70,7 @@ const Ocean = () => {
 };
 
 const EnvironmentLayout = () => {
+  const envMap = useEnvironment({files:"/equi_360 IXTC.jpg"})
   const [openDashboard, setOpenDashboard] = useState(false);
   const [content, setContent] = useState([]);
   const [models, setModels] = useState(true);
@@ -85,23 +91,32 @@ const EnvironmentLayout = () => {
       <Canvas shadows>
         <CameraController />
         <ambientLight intensity={0.1} />
-        <directionalLight
+        {/* directional light uses ortho camer for shadows not eprps */}
+        {/* <directionalLight
           castShadow
-          intensity={0.8}
-          args={["white", 1, 100]}
+          args={["white", 1]}
           position={[0.5, 0.2, 1]}
           // shadow-mapSize={[1024, 1024]}
           // penumbra={2}
         >
         <orthographicCamera attach="shadow-camera" args={[-10, 10, 10, -10]} />
-        </directionalLight>
-
+        </directionalLight> */}
+        <pointLight
+          args={["white", 1]}
+          position={[50, 20, 80]}
+          castShadow
+          shadow-mapSize={[4026, 4026]}
+        >
+          <Sphere />
+        </pointLight>
         {/* <spotLight
           castShadow
           intensity={1}
-          args={["blue", 1, 100]}
-          position={[-1, 1, 1]}
-          penumbra={2}
+          args={["white", 2, 100]}
+          position={[0.5, 5, 1]}
+          penumbra={0.4}
+          angle={30}
+          
         /> */}
         <Html
           className={"bg-blue-700/70 w-60 h-20 absolute top-0 text-white"}
@@ -116,19 +131,27 @@ const EnvironmentLayout = () => {
             position={[0, 0, 0]}
             args={[1000, 1000]}
           >
-            <meshStandardMaterial attach="material" color="white" />
+            <meshStandardMaterial attach="material" color="black" metalness={0.5}/>
           </Plane> */}
           {models && (
-          <Models
-            selectedContent={handleSelectedContent}
-            clickMesh={handleClickMesh}
-          />
-        )}
+            <Models
+              selectedContent={handleSelectedContent}
+              clickMesh={handleClickMesh}
+            />
+          )}
 
-          <ContactShadows position={[0, -0.8, 0]} />
+          {/* <ContactShadows position={[0, -0.8, 0]} /> */}
+
+          <Sphere position={[0, 5, 0]} args={[1,256,256]} envMap={envMap}>
+            <meshStandardMaterial attach="material" roughness={0.1} metalness={1}/>
+          </Sphere>
+          <Ocean />
+          {/* <Sky scale={10000} sunPosition={[500, 150, 1000]} turbidity={0.1} /> */}
+          {/* <Environment>
+
+        </Environment> */}
+          <Environment map={envMap} background />
         </Suspense>
-        <Ocean />
-        <Sky scale={10000} sunPosition={[500, 150, 1000]} turbidity={0.1} />
       </Canvas>
 
       {openDashboard && <Dashboard content={content} />}
