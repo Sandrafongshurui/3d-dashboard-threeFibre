@@ -42,7 +42,6 @@ export function Buoy(props) {
     <>
       <group
         {...props}
-        rotation={[-Math.PI / 2, 0, 0]}
         dispose={null}
         onPointerDown={(e) => {
           e.stopPropagation()
@@ -51,14 +50,7 @@ export function Buoy(props) {
           props.clickMesh(!selected)
         }}
       >
-        
-        <spotLight
-          castShadow
-          intensity={1}
-          args={['blue', 1, 100]}
-          position={[-1, 1, 1]}
-        />
-        {/* <group rotation={[-Math.PI / 2, 0, 0]}> */}
+        <group rotation={[-Math.PI / 2, 0, 0]}>
           <mesh
             castShadow
             receiveShadow
@@ -122,19 +114,7 @@ export function Buoy(props) {
             material={materials.aluminium_orange}
             position={[0, 0, 0.72]}
           />
-          <mesh castShadow receiveShadow position={[0, 0.5, 1]}>
-            <boxGeometry />
-            <meshStandardMaterial attach="material" color="white" />
-          </mesh>
-          <Plane
-            receiveShadow
-            // rotation={[-Math.PI / 2, 0, 0]}
-            // position={[0, -1, 0]}
-            args={[1000, 1000]}
-          >
-            <meshStandardMaterial attach="material" color="white" />
-          </Plane>
-        {/* </group> */}
+        </group>
       </group>
     </>
   )

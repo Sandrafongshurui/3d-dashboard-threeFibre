@@ -18,14 +18,14 @@ export const Models = (props) => {
   return (
     <React.Fragment>
       <Buoy
-        scale={[5, 5, 5]}
-        position={[-5, 5, 0]}
+      scale={[5, 5, 5]}
+      position={[0, -0.2, -5]}
         data={handleSelectedData}
         clickMesh={handleClickMeshA}
       />
       <RescueBoat
         scale={[50, 50, 50]}
-        position={[5, 1, 0]}
+        position={[5, 0.2, 0]}
         data={handleSelectedData}
         clickMesh={handleClickMeshA}
       />
