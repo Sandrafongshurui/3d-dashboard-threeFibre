@@ -17,12 +17,14 @@ import {
   ContactShadows,
   Sphere,
   useEnvironment,
-  Environment
+  Environment,
+  CubeCamera,
 } from "@react-three/drei";
 import React, { Suspense, useState, useRef, useMemo } from "react";
 import { Models } from "./Models";
 import Dashboard from "./Dashboard";
 import { Water } from "three-stdlib";
+import Ground from "./Ground";
 extend({ Water });
 
 //users camera to control
@@ -40,7 +42,7 @@ const Ocean = () => {
   const gl = useThree((state) => state.gl);
   const waterNormals = useLoader(THREE.TextureLoader, "/waternormals.jpeg");
   waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
-  const geom = useMemo(() => new THREE.PlaneGeometry(10000, 10000), []);
+  const geom = useMemo(() => new THREE.PlaneGeometry(10, 10), []);
   const config = useMemo(
     () => ({
       textureWidth: 512,
@@ -48,9 +50,9 @@ const Ocean = () => {
       waterNormals,
       sunDirection: new THREE.Vector3(),
       sunColor: 0xffffff,
-      // waterColor: 0x001e0f,
-      distortionScale: 0,
-      fog: false,
+      waterColor: 0x001e0f,
+      distortionScale: 3.7,
+      fog: true,
       format: gl.encoding,
     }),
     [waterNormals]
@@ -61,8 +63,9 @@ const Ocean = () => {
   return (
     <water
       ref={ref}
+      position={[0, -10, 0]}
       args={[geom, config]}
-      rotation-x={-Math.PI / 2}
+      rotation={[-Math.PI / 2, 0, 0]}
       receiveShadow
       // castShadow
     />
@@ -70,7 +73,7 @@ const Ocean = () => {
 };
 
 const EnvironmentLayout = () => {
-  const envMap = useEnvironment({files:"/equi_360 IXTC.jpg"})
+  // const envMap = useEnvironment({ path: "/cubemap" });
   const [openDashboard, setOpenDashboard] = useState(false);
   const [content, setContent] = useState([]);
   const [models, setModels] = useState(true);
@@ -89,6 +92,7 @@ const EnvironmentLayout = () => {
   return (
     <React.Fragment>
       <Canvas shadows>
+        <color args={[0, 0, 0]} attach="background" />
         <CameraController />
         <ambientLight intensity={0.1} />
         {/* directional light uses ortho camer for shadows not eprps */}
@@ -101,23 +105,42 @@ const EnvironmentLayout = () => {
         >
         <orthographicCamera attach="shadow-camera" args={[-10, 10, 10, -10]} />
         </directionalLight> */}
-        <pointLight
-          args={["white", 1]}
+        {/* <pointLight
+          args={["white", 2]}
           position={[50, 20, 80]}
           castShadow
           shadow-mapSize={[4026, 4026]}
         >
           <Sphere />
-        </pointLight>
+        </pointLight> */}
         {/* <spotLight
-          castShadow
-          intensity={1}
-          args={["white", 2, 100]}
-          position={[0.5, 5, 1]}
-          penumbra={0.4}
-          angle={30}
+        color={[0, 0, 0]}
+        intensity={2}
+        angle={0.6}
+        penumbra={0.5}
+        position={[-5, 5, 0]}
+        castShadow
+        shadow-bias={-0.0001}
           
         /> */}
+        <spotLight
+        color={[1, 0.25, 0.7]}
+        intensity={1.5}
+        angle={2}
+        penumbra={0.5}
+        position={[3, 5, 0]}
+        castShadow
+        shadow-bias={-0.0001}
+      />
+      <spotLight
+        color={[0.14, 0.5, 1]}
+        intensity={2}
+        angle={2}
+        penumbra={0.5}
+        position={[-3, 5, 0]}
+        castShadow
+        shadow-bias={-0.0001}
+      />
         <Html
           className={"bg-blue-700/70 w-60 h-20 absolute top-0 text-white"}
           position={[-4, 10, -1]}
@@ -125,32 +148,44 @@ const EnvironmentLayout = () => {
           <p>Object data</p>
         </Html>
         <Suspense fallback={null}>
-          {/* <Plane
-            receiveShadow
-            rotation={[-Math.PI / 2, 0, 0]}
-            position={[0, 0, 0]}
-            args={[1000, 1000]}
-          >
-            <meshStandardMaterial attach="material" color="black" metalness={0.5}/>
-          </Plane> */}
+          {/*  */}
+          {/* <Environment map={envMap} background /> */}
+          {/* it sets 6 cams in eth centre of the scsne and takes 6 pics and combine into one texture in eth callback */}
+          <CubeCamera frames={2} >
+            {(texture) => (
+              <>
+                {" "}
+                <Environment map={texture} />
+                <Sphere position={[0, 1, 0]} args={[1, 256, 256]}>
+                  <meshStandardMaterial
+                    attach="material"
+                    roughness={0}
+                    metalness={1}
+                  />
+                </Sphere>
+              </>
+            )}
+          </CubeCamera>
           {models && (
             <Models
               selectedContent={handleSelectedContent}
               clickMesh={handleClickMesh}
             />
           )}
-
-          {/* <ContactShadows position={[0, -0.8, 0]} /> */}
-
-          <Sphere position={[0, 5, 0]} args={[1,256,256]} envMap={envMap}>
-            <meshStandardMaterial attach="material" roughness={0.1} metalness={1}/>
-          </Sphere>
-          <Ocean />
+          {/* <ContactShadows position={[0, 0, 0]} /> */}
+          {/* <Sphere position={[-5, -5, 0]} args={[1, 256, 256]}>
+            <meshStandardMaterial attach="material" />
+          </Sphere> */}
+          {/* <Box position={[-5, 3, 0]}>
+            <meshStandardMaterial
+              attach="material"
+              roughness={0}
+              metalness={1}
+            />
+          </Box> */}
+          <Ground />
+           {/* <Ocean /> */}
           {/* <Sky scale={10000} sunPosition={[500, 150, 1000]} turbidity={0.1} /> */}
-          {/* <Environment>
-
-        </Environment> */}
-          <Environment map={envMap} background />
         </Suspense>
       </Canvas>
 

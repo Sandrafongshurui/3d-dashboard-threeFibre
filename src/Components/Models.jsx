@@ -19,13 +19,13 @@ export const Models = (props) => {
     <React.Fragment>
       <Buoy
       scale={[5, 5, 5]}
-      position={[0, -0.2, -5]}
+      position={[0, -1, -15]}
         data={handleSelectedData}
         clickMesh={handleClickMeshA}
       />
       <RescueBoat
         scale={[50, 50, 50]}
-        position={[5, 0.2, 0]}
+        position={[5, -0.5, 0]}
         data={handleSelectedData}
         clickMesh={handleClickMeshA}
       />
