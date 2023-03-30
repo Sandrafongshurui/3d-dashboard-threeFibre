@@ -154,7 +154,6 @@ const EnvironmentLayout = () => {
           <CubeCamera frames={2} >
             {(texture) => (
               <>
-                {" "}
                 <Environment map={texture} />
                 <Sphere position={[0, 1, 0]} args={[1, 256, 256]}>
                   <meshStandardMaterial
@@ -189,7 +188,8 @@ const EnvironmentLayout = () => {
         </Suspense>
       </Canvas>
 
-      {openDashboard && <Dashboard content={content} />}
+      {openDashboard && <Dashboard position={["bottomleft"]} content={content} />}
+      {openDashboard && <Dashboard position={["topleft"]} content={content} />}
       <button onClick={handleOnClick}>Close</button>
     </React.Fragment>
   );

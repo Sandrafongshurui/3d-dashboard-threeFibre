@@ -23,9 +23,7 @@ export function Buoy(props) {
           `${process.env.REACT_APP_API}/data/bus/`
         );
         setData(response.data.NextBus);
-        //setData(response.data)
         console.log(response.data.NextBus);
-        // console.log(typeof response.data)
       };
       fetchData();
       const intervalId = setInterval(fetchData, 1000 * 60);
