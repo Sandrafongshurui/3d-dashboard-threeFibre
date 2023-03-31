@@ -1,0 +1,30 @@
+[
+    {
+        "title": "Life Buoy",
+        "description": "<p>Bathroom Sink is good for washing your hands</p>",
+        "camPos": {
+            "x": 6.61,
+            "y": 3.89,
+            "z": 1.37
+        },
+        "position": {
+            "x": 0,
+            "y": 9,
+            "z": -15
+        }
+    },
+    {
+        "title": "Rescue Boat",
+        "description": "<p>Bathroom Sink is good for washing your hands</p>",
+        "camPos": {
+            "x": 6.61,
+            "y": 3.89,
+            "z": 1.37
+        },
+        "position": {
+            "x": 5,
+            "y": 3.5,
+            "z": 0
+        }
+    }
+]

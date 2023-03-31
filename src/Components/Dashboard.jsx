@@ -2,11 +2,8 @@ import React from 'react'
 
 const Dashboard = ({ content, position }) => {
   console.log(content)
-  const [topleft, bottomleft] = position
-  let dashBoardClassName = `bg-gray-700/70 w-60 h-60 z-20 absolute text-white`
-  topleft? topleft = "top-0" : ""
-  bottomleft? bottomleft = "bottom-0" : ""
-  dashBoardClassName += topleft + bottomleft
+  const [left] = position
+  const dashBoardClassName = `bg-gray-700/70 z-20 absolute text-white ${left} rounded-lg p-10`
   return (
     <ul className={dashBoardClassName}>
       {content.map((item, idx) => 
