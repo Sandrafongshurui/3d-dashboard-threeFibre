@@ -3,13 +3,13 @@
         "title": "Life Buoy",
         "description": "<p>Bathroom Sink is good for washing your hands</p>",
         "camPos": {
-            "x": 6.61,
-            "y": 3.89,
-            "z": 1.37
+            "x": 0,
+            "y":18,
+            "z": 3
         },
         "position": {
             "x": 0,
-            "y": 9,
+            "y": 8,
             "z": -15
         }
     },

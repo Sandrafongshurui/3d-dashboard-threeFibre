@@ -11,52 +11,18 @@ export function Buoy(props) {
   const { nodes, materials } = useGLTF('/Buoy-draco.glb')
   const [data, setData] = useState(null)
   const [selected] = useState(false)
-  // const [data, ]
-  // let modelData = {}
-
-  useEffect(() => {
-    try {
-      console.log('mount')
-      const fetchData = async () => {
-        console.log('fetch data every 1min')
-        const response = await Axios.get(
-          `${process.env.REACT_APP_API}/data/bus/`,
-        )
-        setData(response.data.NextBus)
-        console.log(response.data.NextBus)
-      }
-      fetchData()
-      const intervalId = setInterval(fetchData, 1000 * 60)
-      return () => {
-        console.log('unmount')
-        clearInterval(intervalId)
-      }
-    } catch (error) {
-      console.log('error', error)
-    }
-  }, [])
-
-  useEffect(() => {
-    try {
-      props.data(data)
-      props.clickMesh(!selected)
-    } catch (error) {
-      console.log('error', error)
-    }
-  }, [data])
-
   return (
     <>
 
       <group
         {...props}
         dispose={null}
-        onPointerDown={(e) => {
-          e.stopPropagation()
-          console.log('click', !selected, data)
-          props.data(data)
-          props.clickMesh(!selected)
-        }}
+        // onPointerDown={(e) => {
+        //   e.stopPropagation()
+        //   console.log('click', !selected, data)
+        //   props.data(data)
+        //   props.clickMesh(!selected)
+        // }}
       >
         <group rotation={[-Math.PI / 2, 0, 0]}>
           <mesh

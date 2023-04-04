@@ -6,8 +6,10 @@ Command: npx gltfjsx@6.1.4 Buoy-draco.glb
 import React, { useState, useEffect } from 'react'
 import { Buoy } from './Buoy-draco'
 import { RescueBoat } from './Rescue-boat-draco'
-import { Html } from '@react-three/drei'
+
 import * as THREE from 'three'
+import annotations from '../annotations.json'
+import AnnotationNumberLabel from './AnnotationNumberLabel'
 
 
 
@@ -20,18 +22,27 @@ export const Models = (props) => {
   const handleClickMeshA = (value) => {
     props.clickMesh(value)
   }
+
+  const selectedAnnotation = (idx) => {
+    // setTo(annotations[idx].camPos)
+    // setTarget(annotations[idx].position)
+    props.selected(idx)
+    // setLerping(true)
+  }
+
   return (
     <React.Fragment>
+      <AnnotationNumberLabel annotation={annotations[0]} idx={0} selected={selectedAnnotation} annotationData={handleSelectedData}/>
       <Buoy
         scale={[5, 5, 5]}
-        position={[0, -1, -15]}
-        data={handleSelectedData}
-        clickMesh={handleClickMeshA}
+        position={[0, 0, -15]}
+        // data={handleSelectedData}
+        // clickMesh={handleClickMeshA}
       />
 
       <RescueBoat
         scale={[50, 50, 50]}
-        position={[5, -0.5, 0]}
+        position={[5, 0.3, 0]}
         data={handleSelectedData}
         clickMesh={handleClickMeshA}
       />
