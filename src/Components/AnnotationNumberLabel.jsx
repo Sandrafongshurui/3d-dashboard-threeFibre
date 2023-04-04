@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Html } from '@react-three/drei'
 
-const AnnotationNumberLabel = ({ annotation, idx, selected, annotationData }) => {
+const AnnotationNumberLabel = ({ annotation, idx, selected, annotationData, apiUrl }) => {
   const [data, setData] = useState(null);
   const [popUp, setPopUp] = useState(false);
   useEffect(() => {
@@ -11,10 +11,10 @@ const AnnotationNumberLabel = ({ annotation, idx, selected, annotationData }) =>
       const fetchData = async () => {
         console.log("fetch data every 1min");
         const response = await Axios.get(
-          `${process.env.REACT_APP_API}/data/bus/`
+          apiUrl
         );
-        setData(response.data.NextBus);
-        console.log(response.data.NextBus);
+        setData(response.data);
+        console.log(response.data);
       };
       fetchData();
       const intervalId = setInterval(fetchData, 1000 * 60);

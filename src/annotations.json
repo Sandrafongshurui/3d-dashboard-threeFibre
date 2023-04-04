@@ -17,9 +17,9 @@
         "title": "Rescue Boat",
         "description": "<p>Bathroom Sink is good for washing your hands</p>",
         "camPos": {
-            "x": 6.61,
-            "y": 3.89,
-            "z": 1.37
+            "x": 5,
+            "y": 18,
+            "z": 12
         },
         "position": {
             "x": 5,

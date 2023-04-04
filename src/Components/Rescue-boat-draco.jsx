@@ -25,12 +25,12 @@ export function RescueBoat(props) {
     <group
       {...props}
       dispose={null}
-      onPointerDown={(e) => {
-        e.stopPropagation();
-        console.log("click", !selected, data);
-        props.data(data);
-        props.clickMesh(!selected);
-      }}
+      // onPointerDown={(e) => {
+      //   e.stopPropagation();
+      //   console.log("click", !selected, data);
+      //   props.data(data);
+      //   props.clickMesh(!selected);
+      // }}
     >
       <mesh
         castShadow
