@@ -23,7 +23,12 @@ import {
 import React, { Suspense, useState, useRef, useMemo } from "react";
 import { Models } from "./Models";
 import Dashboard from "./Dashboard";
-
+import {
+  Selection,
+  Select,
+  EffectComposer,
+  Outline,
+} from "@react-three/postprocessing";
 import annotations from "../annotations.json";
 import Ground from "./Ground";
 import { Water } from "three-stdlib";
@@ -119,22 +124,25 @@ const EnvironmentLayout = () => {
             )}
           </CubeCamera>
           {models && (
-            <>
+            <Selection>
+              <EffectComposer multisampling={8} autoClear={false}>
+              <Outline blur visibleEdgeColor="white" edgeStrength={100} width={5000} />
+              </EffectComposer>
               <Models
                 selectedContent={handleSelectedContent}
                 selected={gotoAnnotation}
                 clickMesh={handleClickMesh}
               />
-            </>
+            </Selection>
           )}
           <Animate controls={ref} lerping={lerping} to={to} target={target} />
-          <Ground/>
+          <Ground />
           {/* <Sky scale={10000} sunPosition={[500, 150, 1000]} turbidity={0.1} /> */}
         </Suspense>
       </Canvas>
 
       {openDashboard && <Dashboard position={["top-0"]} content={content} />}
-     
+
       <button onClick={handleOnClick}>Close</button>
     </React.Fragment>
   );
