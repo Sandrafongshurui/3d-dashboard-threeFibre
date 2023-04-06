@@ -4,8 +4,8 @@ import {
   useLoader,
   useFrame,
   extend,
-} from "@react-three/fiber";
-import * as THREE from "three";
+} from '@react-three/fiber'
+import * as THREE from 'three'
 import {
   OrbitControls,
   PerspectiveCamera,
@@ -19,63 +19,57 @@ import {
   useEnvironment,
   Environment,
   CubeCamera,
-} from "@react-three/drei";
-import React, { Suspense, useState, useRef, useMemo } from "react";
-import { Models } from "./Models";
-import Dashboard from "./Dashboard";
-import {
-  Selection,
-  Select,
-  EffectComposer,
-  Outline,
-} from "@react-three/postprocessing";
-import annotations from "../annotations.json";
-import Ground from "./Ground";
-import { Water } from "three-stdlib";
-extend({ Water });
+} from '@react-three/drei'
+import React, { Suspense, useState, useRef, useMemo } from 'react'
+import { Models } from './Models'
+import Dashboard from './Dashboard'
+import annotations from '../annotations.json'
+import Ground from './Ground'
+import { Water } from 'three-stdlib'
+extend({ Water })
 
 //users camera to control
 const Animate = ({ controls, lerping, to, target }) => {
   useFrame(({ camera }, delta) => {
     if (lerping) {
-      camera.position.lerp(to, delta * 2);
+      camera.position.lerp(to, delta * 2)
       // controls is the ref of orbitControls
-      controls.current.target.lerp(target, delta * 2);
-    } else {
-      console.log("not lerping");
+      controls.current.target.lerp(target, delta * 2)
     }
-  });
-};
+  })
+}
 
 const EnvironmentLayout = () => {
-  const envMap = useEnvironment({ path: "/cubemap" });
-  const ref = useRef();
-  const [lerping, setLerping] = useState(false);
-  const [to, setTo] = useState();
-  const [target, setTarget] = useState();
-  const [selected, setSelected] = useState(-1);
-  const [openDashboard, setOpenDashboard] = useState(false);
-  const [content, setContent] = useState([]);
-  const [models, setModels] = useState(true);
+  const envMap = useEnvironment({ path: '/cubemap' })
+  const ref = useRef()
+  const [lerping, setLerping] = useState(false)
+  const [to, setTo] = useState()
+  const [target, setTarget] = useState()
+  const [selected, setSelected] = useState(-1)
+  const [openDashboard, setOpenDashboard] = useState(false)
+  const [content, setContent] = useState([])
+  const [models, setModels] = useState(true)
   const handleSelectedContent = (value) => {
-    setContent([...Object.entries(value)]);
-  };
+    setContent([...Object.entries(value)])
+  }
   const handleClickMesh = (value) => {
-    console.log(value);
-    setOpenDashboard(value);
-  };
+    if(!openDashboard){
+      console.log(value)
+      setOpenDashboard(value) 
+    }
+  }
   const handleOnClick = () => {
-    setModels(!models);
-  };
+    setModels(!models)
+  }
 
   const gotoAnnotation = (idx) => {
-    setTo(annotations[idx].camPos);
-    setTarget(annotations[idx].position);
+    setTo(annotations[idx].camPos)
+    setTarget(annotations[idx].position)
     // setSelected(idx)
-    setLerping(true);
+    setLerping(true)
     // setContent([...Object.entries(annotations[idx])]);
-    handleClickMesh(true);
-  };
+    // handleClickMesh(true)
+  }
 
   return (
     <React.Fragment>
@@ -86,7 +80,7 @@ const EnvironmentLayout = () => {
       >
         <color args={[0, 0, 0]} attach="background" />
         {/* <CameraController ref={ref}/> */}
-        <OrbitControls ref={ref} target={[0, 0.35, 0]} />
+        <OrbitControls minDistance={5} maxDistance={50} ref={ref} target={[0, 0.35, 0]} />
         <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
         <ambientLight intensity={0.1} />
         <spotLight
@@ -124,16 +118,11 @@ const EnvironmentLayout = () => {
             )}
           </CubeCamera>
           {models && (
-            <Selection>
-              <EffectComposer multisampling={8} autoClear={false}>
-              <Outline blur visibleEdgeColor="white" edgeStrength={100} width={5000} />
-              </EffectComposer>
-              <Models
-                selectedContent={handleSelectedContent}
-                selected={gotoAnnotation}
-                clickMesh={handleClickMesh}
-              />
-            </Selection>
+            <Models
+              selectedContent={handleSelectedContent}
+              selected={gotoAnnotation}
+              clickMesh={handleClickMesh}
+            />
           )}
           <Animate controls={ref} lerping={lerping} to={to} target={target} />
           <Ground />
@@ -141,11 +130,11 @@ const EnvironmentLayout = () => {
         </Suspense>
       </Canvas>
 
-      {openDashboard && <Dashboard position={["top-0"]} content={content} />}
+      {openDashboard && <Dashboard position={['top-0']} content={content} />}
 
       <button onClick={handleOnClick}>Close</button>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default EnvironmentLayout;
+export default EnvironmentLayout

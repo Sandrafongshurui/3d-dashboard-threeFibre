@@ -12,7 +12,7 @@ const Ground = () => {
     [normal, roughness].forEach((texture) => {
       texture.wrapS = THREE.RepeatWrapping;
       texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat.set(60, 60);
+      texture.repeat.set(50, 50);
     });
 
     normal.encoding = THREE.LinearEncoding;
@@ -21,7 +21,7 @@ const Ground = () => {
     <Plane
       receiveShadow
       rotation={[-Math.PI / 2, 0, 0]}
-      position={[0, -1, 0]}
+      position={[0, -0.5, 0]}
       args={[500, 500]}
     >
       {/* <meshStandardMaterial attach="material"color="black" roughness={0} metalness={1}/> */}

@@ -18,7 +18,8 @@ export function Buoy(props) {
         <group
           {...props}
           dispose={null}
-          onPointerOver={() => hover(true)} onPointerOut={() => hover(false)}
+          onPointerOver={() => hover(true)} 
+          onPointerOut={() => hover(false)}
           // onPointerDown={(e) => {
           //   e.stopPropagation()
           //   console.log('click', !selected, data)
