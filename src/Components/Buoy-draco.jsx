@@ -6,12 +6,37 @@ Command: npx gltfjsx@6.1.4 Buoy-draco.glb
 import React, { useState, useEffect } from "react";
 import { useGLTF, Box, Plane } from "@react-three/drei";
 import { Select } from '@react-three/postprocessing'
+import Axios from "axios";
 
 export function Buoy(props) {
   const { nodes, materials } = useGLTF("/Buoy-draco.glb");
   const [hovered, hover] = useState(null)
   const [data, setData] = useState(null);
   const [selected] = useState(false);
+
+  
+  useEffect(() => {
+    try {
+      console.log("mount");
+      const fetchData = async () => {
+        console.log("fetch data every 1min");
+        const response = await Axios.get(
+          `${process.env.REACT_APP_API}/data/bus/`
+        );
+        setData(response.data);
+        console.log(response.data);
+      };
+      fetchData();
+      const intervalId = setInterval(fetchData, 1000 * 60);
+      return () => {
+        console.log("unmount");
+        clearInterval(intervalId);
+      };
+    } catch (error) {
+      console.log("error", error);
+    }
+  }, []);
+
   return (
     <>
       <Select enabled={hovered} >
@@ -20,12 +45,12 @@ export function Buoy(props) {
           dispose={null}
           onPointerOver={() => hover(true)} 
           onPointerOut={() => hover(false)}
-          // onPointerDown={(e) => {
-          //   e.stopPropagation()
-          //   console.log('click', !selected, data)
-          //   props.data(data)
-          //   props.clickMesh(!selected)
-          // }}
+          onPointerDown={(e) => {
+            e.stopPropagation()
+            console.log('click', !selected, data)
+            props.data(data)
+            props.clickMesh(!selected)
+          }}
         >
           <group rotation={[-Math.PI / 2, 0, 0]}>
             <mesh

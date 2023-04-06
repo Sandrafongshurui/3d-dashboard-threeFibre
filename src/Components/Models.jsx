@@ -26,16 +26,10 @@ export const Models = (props) => {
     props.clickMesh(value)
   }
 
-  const selectedAnnotation = (idx) => {
-    // setTo(annotations[idx].camPos)
-    // setTarget(annotations[idx].position)
-    props.selected(idx)
-    // setLerping(true)
-  }
 
   return (
     <React.Fragment>
-      <AnnotationNumberLabel
+      {/* <AnnotationNumberLabel
         annotation={annotations[0]}
         idx={0}
         selected={selectedAnnotation}
@@ -54,20 +48,15 @@ export const Models = (props) => {
         selected={selectedAnnotation}
         annotationData={handleSelectedData}
         apiUrl={`${process.env.REACT_APP_API}/data/taxi/`}
-      />
-      <RescueBoat
-        scale={[50, 50, 50]}
-        position={[5, 0.3, 0]}
-        // data={handleSelectedData}
-        // clickMesh={handleClickMeshA}
-      />
+      /> */}
+
       <Selection>
-        <EffectComposer multisampling={10} autoClear={false}>
+        <EffectComposer multisampling={8} autoClear={false}>
           <Outline
             blur
             xRay
             visibleEdgeColor="white"
-            edgeStrength={1000}
+            edgeStrength={800}
             width={1000}
           />
           {/* <Bloom kernelSize={3} luminanceThreshold={0} luminanceSmoothing={0.4} intensity={0.6} /> */}
@@ -75,8 +64,14 @@ export const Models = (props) => {
         <Buoy
           scale={[5, 5, 5]}
           position={[-5, 0, -15]}
-          // data={handleSelectedData}
-          // clickMesh={handleClickMeshA}
+          data={handleSelectedData}
+          clickMesh={handleClickMeshA}
+        />
+        <RescueBoat
+          scale={[50, 50, 50]}
+          position={[5, 0.3, 0]}
+          data={handleSelectedData}
+          clickMesh={handleClickMeshA}
         />
       </Selection>
     </React.Fragment>

@@ -62,14 +62,14 @@ const EnvironmentLayout = () => {
     setModels(!models)
   }
 
-  const gotoAnnotation = (idx) => {
-    setTo(annotations[idx].camPos)
-    setTarget(annotations[idx].position)
-    // setSelected(idx)
-    setLerping(true)
-    // setContent([...Object.entries(annotations[idx])]);
-    // handleClickMesh(true)
-  }
+  // const gotoAnnotation = (idx) => {
+  //   setTo(annotations[idx].camPos)
+  //   setTarget(annotations[idx].position)
+  //   // setSelected(idx)
+  //   setLerping(true)
+  //   // setContent([...Object.entries(annotations[idx])]);
+  //   // handleClickMesh(true)
+  // }
 
   return (
     <React.Fragment>
@@ -80,7 +80,7 @@ const EnvironmentLayout = () => {
       >
         <color args={[0, 0, 0]} attach="background" />
         {/* <CameraController ref={ref}/> */}
-        <OrbitControls minDistance={5} maxDistance={50} ref={ref} target={[0, 0.35, 0]} />
+        <OrbitControls minDistance={5} maxDistance={100} ref={ref} target={[0, 0.35, 0]} />
         <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
         <ambientLight intensity={0.1} />
         <spotLight
@@ -120,7 +120,7 @@ const EnvironmentLayout = () => {
           {models && (
             <Models
               selectedContent={handleSelectedContent}
-              selected={gotoAnnotation}
+              // selected={gotoAnnotation}
               clickMesh={handleClickMesh}
             />
           )}
