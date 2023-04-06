@@ -1,39 +1,44 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
+import React, { useState, useEffect } from 'react'
+import Axios from 'axios'
 import { Html } from '@react-three/drei'
+import { MdCommute } from "react-icons/md";
 
-const AnnotationNumberLabel = ({ annotation, idx, selected, annotationData, apiUrl }) => {
-  const [data, setData] = useState(null);
-  const [popUp, setPopUp] = useState(false);
+const AnnotationNumberLabel = ({
+  annotation,
+  idx,
+  selected,
+  annotationData,
+  apiUrl,
+}) => {
+  const [data, setData] = useState(null)
+  const [popUp, setPopUp] = useState(false)
   useEffect(() => {
     try {
-      console.log("mount");
+      console.log('mount')
       const fetchData = async () => {
-        console.log("fetch data every 1min");
-        const response = await Axios.get(
-          apiUrl
-        );
-        setData(response.data);
-        console.log(response.data);
-      };
-      fetchData();
-      const intervalId = setInterval(fetchData, 1000 * 60);
+        console.log('fetch data every 1min')
+        const response = await Axios.get(apiUrl)
+        setData(response.data)
+        console.log(response.data)
+      }
+      fetchData()
+      const intervalId = setInterval(fetchData, 1000 * 60)
       return () => {
-        console.log("unmount");
-        clearInterval(intervalId);
-      };
+        console.log('unmount')
+        clearInterval(intervalId)
+      }
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error)
     }
-  }, []);
+  }, [])
 
   const handleOnClick = () => {
     // console.log("click", !selected, data);
-    annotationData(data);
+    annotationData(data)
     selected(idx)
     setPopUp(!popUp)
     // prop0s.clickMesh(!selected);
-  };
+  }
 
   return (
     <>
@@ -52,7 +57,7 @@ const AnnotationNumberLabel = ({ annotation, idx, selected, annotationData, apiU
           height="34"
           width="34"
           transform="translate(-16 -16)"
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
         >
           <circle
             cx="17"
@@ -69,21 +74,25 @@ const AnnotationNumberLabel = ({ annotation, idx, selected, annotationData, apiU
             fill="white"
             fontSize={17}
             fontFamily="monospace"
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: 'none' }}
           >
             {idx + 1}
           </text>
         </svg>
         {popUp && (
-          <ul className="bg-gray-700/70 w-[200px] text-white rounded-lg p-2 text-xs">
-            {Object.entries(data).map((item, idx) => (
-              <li key={idx}>{`${item[0]} : ${item[1]}`}</li>
-            ))}
-          </ul>
+          <div className="bg-gradient-to-r from-cyan-500/70 to-blue-500/70 w-[200px] text-white rounded-lg p-2">
+            <MdCommute/>
+            <h1 className='text-lg'> Life Buoy </h1>
+            <ul className="text-xs whitespace-pre-wrap">
+              {Object.entries(data).map((item, idx) => (
+                <li key={idx}>{`${item[0]} :\n ${item[1]}`}</li>
+              ))}
+            </ul>
+          </div>
         )}
       </Html>
     </>
-  );
-};
+  )
+}
 
-export default AnnotationNumberLabel;
+export default AnnotationNumberLabel
