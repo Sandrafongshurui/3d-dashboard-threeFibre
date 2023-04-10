@@ -61,24 +61,6 @@ export const Models = (props) => {
         // data={handleSelectedData}
         // clickMesh={handleClickMeshA}
       />
-      <Selection>
-        <EffectComposer multisampling={10} autoClear={false}>
-          <Outline
-            blur
-            xRay
-            visibleEdgeColor="white"
-            edgeStrength={1000}
-            width={1000}
-          />
-          {/* <Bloom kernelSize={3} luminanceThreshold={0} luminanceSmoothing={0.4} intensity={0.6} /> */}
-        </EffectComposer>
-        <Buoy
-          scale={[5, 5, 5]}
-          position={[-5, 0, -15]}
-          // data={handleSelectedData}
-          // clickMesh={handleClickMeshA}
-        />
-      </Selection>
     </React.Fragment>
   )
 }

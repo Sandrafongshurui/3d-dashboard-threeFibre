@@ -25,6 +25,7 @@ import { Models } from './Models'
 import Dashboard from './Dashboard'
 import annotations from '../annotations.json'
 import Ground from './Ground'
+import SurroundingCubes from './SurroundingCubes'
 import { Water } from 'three-stdlib'
 extend({ Water })
 
@@ -53,9 +54,9 @@ const EnvironmentLayout = () => {
     setContent([...Object.entries(value)])
   }
   const handleClickMesh = (value) => {
-    if(!openDashboard){
+    if (!openDashboard) {
       console.log(value)
-      setOpenDashboard(value) 
+      setOpenDashboard(value)
     }
   }
   const handleOnClick = () => {
@@ -78,17 +79,39 @@ const EnvironmentLayout = () => {
         onPointerDown={() => setLerping(false)}
         onWheel={() => setLerping(false)}
       >
-        <color args={[0, 0, 0]} attach="background" />
-        {/* <CameraController ref={ref}/> */}
-        <OrbitControls minDistance={5} maxDistance={50} ref={ref} target={[0, 0.35, 0]} />
-        <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
-        <ambientLight intensity={0.1} />
-        <spotLight
-          color={[1, 0.25, 0.7]}
-          intensity={1.5}
-          angle={2}
+        <Suspense fallback={null}>
+          <color args={[0x10151c]} attach="background" />
+          <fog attach="fog" args={[0x10151c, 10, 100]} />
+          {/* <CameraController ref={ref}/> */}
+          <OrbitControls
+            minDistance={5}
+            maxDistance={50}
+            ref={ref}
+            target={[0, 0.35, 0]}
+          />
+          <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
+          <ambientLight intensity={0.1} />
+          {/* <directionalLight
+            castShadow
+            intensity={1}
+            position={[0, 6, 0]}
+            shadow-mapSize={[1024, 1024]}
+          >
+            <orthographicCamera
+              attach="shadow-camera"
+              left={-20}
+              right={20}
+              top={20}
+              bottom={-20}
+            />
+          </directionalLight> */}
+          <spotLight
+          // color={[1, 0.25, 0.7]}
+          color={0xe7f7ff}
+          intensity={2}
+          angle={4}
           penumbra={0.5}
-          position={[3, 5, 0]}
+          position={[3, 15, 0]}
           castShadow
           shadow-bias={-0.0001}
         />
@@ -101,7 +124,6 @@ const EnvironmentLayout = () => {
           castShadow
           shadow-bias={-0.0001}
         />
-        <Suspense fallback={null}>
           {/* it sets 6 cams in eth centre of the scsne and takes 6 pics and combine into one texture in eth callback */}
           <CubeCamera frames={2}>
             {(texture) => (
@@ -124,7 +146,10 @@ const EnvironmentLayout = () => {
               clickMesh={handleClickMesh}
             />
           )}
+          <SurroundingCubes scale={[1,1,1]} position={[-5, 2, 0]}/>
           <Animate controls={ref} lerping={lerping} to={to} target={target} />
+          <Ground />
+            <gridHelper args={[200, 100, 0x00000, 0x10151c]}/>;
           <Ground />
           {/* <Sky scale={10000} sunPosition={[500, 150, 1000]} turbidity={0.1} /> */}
         </Suspense>
