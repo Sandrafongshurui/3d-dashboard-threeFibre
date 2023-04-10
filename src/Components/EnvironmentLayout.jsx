@@ -24,8 +24,8 @@ import React, { Suspense, useState, useRef, useMemo } from 'react'
 import { Models } from './Models'
 import Dashboard from './Dashboard'
 import annotations from '../annotations.json'
-import Ground from './Ground'
 import SurroundingCubes from './SurroundingCubes'
+import Ground from './Ground'
 import { Water } from 'three-stdlib'
 extend({ Water })
 
@@ -81,7 +81,7 @@ const EnvironmentLayout = () => {
       >
         <Suspense fallback={null}>
           <color args={[0x10151c]} attach="background" />
-          <fog attach="fog" args={[0x10151c, 10, 100]} />
+          <fog attach="fog" args={[0x10151c, 10, 60]} />
           {/* <CameraController ref={ref}/> */}
           <OrbitControls
             minDistance={5}
@@ -146,7 +146,7 @@ const EnvironmentLayout = () => {
               clickMesh={handleClickMesh}
             />
           )}
-          <SurroundingCubes scale={[1,1,1]} position={[-5, 2, 0]}/>
+          <SurroundingCubes scale={[4,4,4]}/>
           <Animate controls={ref} lerping={lerping} to={to} target={target} />
           <Ground />
             <gridHelper args={[200, 100, 0x00000, 0x10151c]}/>;

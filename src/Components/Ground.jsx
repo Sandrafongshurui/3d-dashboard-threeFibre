@@ -21,7 +21,7 @@ const Ground = () => {
     <Plane
       receiveShadow
       rotation={[-Math.PI / 2, 0, 0]}
-      position={[0, -0.5, 0]}
+      position={[0, -0.01, 0]}
       args={[500, 500, 100, 100]}
     >
      

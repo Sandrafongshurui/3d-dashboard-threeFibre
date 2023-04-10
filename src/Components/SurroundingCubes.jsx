@@ -22,25 +22,58 @@ import {
   CubeCamera,
 } from '@react-three/drei'
 
+// RANDOM Function
+const mathRandom = (num) => {
+  const numValue = -Math.random() * num + Math.random() * num
+  return numValue
+}
+
 const SurroundingCubes = (props) => {
   const segments = 2
+  const boxes = []
+  
+
+  for (var i = 1; i <150; i++) {
+    const scaleY= 0.1+Math.abs(mathRandom(15))
+    boxes.push(
+      <Box
+        {...props}
+        castShadow
+        receiveShadow
+        args={[1, 1, 1, segments, segments, segments]}
+        scale-y={scaleY}
+        position-x={Math.round(mathRandom(8))*6}
+        position-z={Math.round(mathRandom(8))*6}
+        position-y={scaleY/2}
+      >
+        <meshStandardMaterial
+            color={0x000000}
+            side={THREE.DoubleSide}
+            roughness={0}
+            metalness={1}
+            opacity={0.9}
+            // wireframe
+            // transparent
+          />
+        {/* <Box args={[1, 1, 1, segments, segments, segments]}>
+          <meshStandardMaterial
+            color={0x000000}
+            side={THREE.DoubleSide}
+            roughness={10}
+            metalness={0.6}
+            opacity={0.9}
+            // wireframe
+            // transparent
+          />
+        </Box> */}
+      </Box>,
+    )
+  }
 
   return (
-    <Box
-      {...props}
-      castShadow
-      receiveShadows
-      args={[1,1,1, segments, segments, segments]}
-    >
-       <meshStandardMaterial
-        color={0x000000}
-        side={THREE.DoubleSide}
-        roughness={10}
-        metalness={0.6}
-        opacity={0.9}
-        transparent
-      />
-    </Box>
+    <>
+      {boxes}
+    </>
   )
 }
 
