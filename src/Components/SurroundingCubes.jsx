@@ -48,6 +48,7 @@ const SurroundingCubes = (props) => {
           position-x={Math.round(mathRandom(12)) * 6}
           position-z={Math.round(mathRandom(12)) * 6}
           position-y={scaleY / 2}
+          key={i}
         >
           <meshStandardMaterial
             color={0x10151c}

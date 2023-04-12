@@ -99,7 +99,7 @@ const AnnotationNumberLabel = ({
           <div className="absolute bottom-12 flex">
             <hr className="w-0.5 h-16 bg-white" />
             <div className="bg-transparent w-[200px] text-white rounded-lg">
-              <hr className="mx- w-full h-0.5 border-0 bg-gradient-to-r from-transparent via-cyan-400/100 to-transparent" />
+              <hr className="w-full h-0.5 border-0 bg-gradient-to-r from-transparent via-cyan-400/100 to-transparent" />
               <div className="p-1 bg-gradient-to-r from-transparent via-[#0044c16b] to-transparent ">
                 {/* <MdCommute /> */}
                 <h1 className="text-lg"> {annotation.title} </h1>

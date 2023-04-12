@@ -51,7 +51,7 @@ const EnvironmentLayout = () => {
   const [content, setContent] = useState([]);
   const [models, setModels] = useState(true);
   const handleSelectedContent = (value) => {
-    setContent([...Object.entries(value)]);
+    setContent([...value]);
   };
   const handleClickMesh = (value) => {
     if (!openDashboard) {
