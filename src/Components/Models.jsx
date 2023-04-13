@@ -61,6 +61,13 @@ export const Models = (props) => {
         // data={handleSelectedData}
         // clickMesh={handleClickMeshA}
       />
+        <AnnotationNumberLabel
+        annotation={annotations[2]}
+        idx={2}
+        selected={selectedAnnotation}
+        annotationData={handleSelectedData}
+        apiUrl={`${process.env.REACT_APP_API}/data/platform-crowd/`}
+      />
     </React.Fragment>
   )
 }

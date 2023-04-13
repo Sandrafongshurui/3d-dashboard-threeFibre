@@ -160,7 +160,11 @@ const EnvironmentLayout = () => {
         </Suspense>
       </Canvas>
 
-      {openDashboard && <Dashboard position={["top-0"]} content={content} />}
+      
+      <section className="absolute top-0 m-6 gap-5 flex flex-col">
+      {openDashboard && (<><Dashboard headerName={"Estimated Arrivals"} content={content} />
+      </>)}
+      </section>
 
       <button onClick={handleOnClick}>Close</button>
     </React.Fragment>
