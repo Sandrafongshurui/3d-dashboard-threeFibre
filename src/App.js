@@ -2,15 +2,14 @@ import { Html } from '@react-three/drei';
 import './App.css';
 
 import EnvironmentLayout from './Components/EnvironmentLayout';
+import EnterWorld from './Components/EnterWorld';
 
 const App = () => {
 
   return (
     <div className="App">
       <EnvironmentLayout/>
-      <div className='text-[35px] absolute top-[50%] left-[43%] text-white'>
-        <p>Hello World</p>
-      </div>
+     <EnterWorld/>
       
     </div>
   );

@@ -19,6 +19,7 @@ const AnnotationNumberLabel = ({
         console.log("fetch data every 1min");
         const response = await Axios.get(apiUrl);
         setData(response.data);
+        annotationData(data)
         console.log(response.data);
       };
       fetchData();
@@ -34,7 +35,7 @@ const AnnotationNumberLabel = ({
 
   const handleOnClick = () => {
     // console.log("click", !selected, data);
-    annotationData(data);
+    // annotationData(data);
     selected(idx);
     setPopUp(!popUp);
     // prop0s.clickMesh(!selected);

@@ -16,20 +16,24 @@ import * as THREE from 'three'
 import annotations from '../annotations.json'
 import AnnotationNumberLabel from './AnnotationNumberLabel'
 
-export const Models = (props) => {
-  // const [htmlContent, setHtmlContent] = useState([])
-  const handleSelectedData = (value) => {
+export const Models = ({selectedContent, busContent, trainContent, selected, clickMesh}) => {
+ 
+  const handleBusData = (value) => {
     // setHtmlContent([...Object.entries(value)])
-    props.selectedContent(value)
+    busContent(value)
+  }
+  const handleTrainData = (value) => {
+    // setHtmlContent([...Object.entries(value)])
+    trainContent(value)
   }
   const handleClickMeshA = (value) => {
-    props.clickMesh(value)
+    clickMesh(value)
   }
 
   const selectedAnnotation = (idx) => {
     // setTo(annotations[idx].camPos)
     // setTarget(annotations[idx].position)
-    props.selected(idx)
+    selected(idx)
     // setLerping(true)
   }
 
@@ -39,7 +43,7 @@ export const Models = (props) => {
         annotation={annotations[0]}
         idx={0}
         selected={selectedAnnotation}
-        annotationData={handleSelectedData}
+        annotationData={handleBusData}
         apiUrl={`${process.env.REACT_APP_API}/data/bus/`}
       />
       <Buoy
@@ -52,8 +56,8 @@ export const Models = (props) => {
         annotation={annotations[1]}
         idx={1}
         selected={selectedAnnotation}
-        annotationData={handleSelectedData}
-        apiUrl={`${process.env.REACT_APP_API}/data/taxi/`}
+        annotationData={handleTrainData}
+        apiUrl={`${process.env.REACT_APP_API}/data/platform-crowd/`}
       />
       <RescueBoat
         scale={[50, 50, 50]}
@@ -61,13 +65,13 @@ export const Models = (props) => {
         // data={handleSelectedData}
         // clickMesh={handleClickMeshA}
       />
-        <AnnotationNumberLabel
+        {/* <AnnotationNumberLabel
         annotation={annotations[2]}
         idx={2}
         selected={selectedAnnotation}
         annotationData={handleSelectedData}
-        apiUrl={`${process.env.REACT_APP_API}/data/platform-crowd/`}
-      />
+        apiUrl={`${process.env.REACT_APP_API}/data/taxi/`}
+      /> */}
     </React.Fragment>
   )
 }
