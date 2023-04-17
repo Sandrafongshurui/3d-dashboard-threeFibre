@@ -42,6 +42,35 @@ const Animate = ({ controls, lerping, to, target }) => {
   })
 }
 
+// const animate = () => {
+//   var time = Date.now() * 0.00005;
+//   requestAnimationFrame(animate);
+  
+//   city.rotation.y -= ((mouse.x * 8) - camera.rotation.y) * uSpeed;
+//   city.rotation.x -= (-(mouse.y * 2) - camera.rotation.x) * uSpeed;
+//   if (city.rotation.x < -0.05) city.rotation.x = -0.05;
+//   else if (city.rotation.x>1) city.rotation.x = 1;
+//   var cityRotation = Math.sin(Date.now() / 5000) * 13;
+//   //city.rotation.x = cityRotation * Math.PI / 180;
+  
+//   //console.log(city.rotation.x);
+//   //camera.position.y -= (-(mouse.y * 20) - camera.rotation.y) * uSpeed;;
+  
+//   // for ( let i = 0, l = town.children.length; i < l; i ++ ) {
+//   //   var object = town.children[ i ];
+//   //   //object.scale.y = Math.sin(time*50) * object.rotationValue;
+//   //   //object.rotation.y = (Math.sin((time/object.rotationValue) * Math.PI / 180) * 180);
+//   //   //object.rotation.z = (Math.cos((time/object.rotationValue) * Math.PI / 180) * 180);
+//   // }
+  
+//   smoke.rotation.y += 0.01;
+//   smoke.rotation.x += 0.01;
+  
+//   camera.lookAt(city.position);
+//   renderer.render( scene, camera );  
+// }
+
+
 const EnvironmentLayout = () => {
   const envMap = useEnvironment({ path: '/cubemap' })
   const ref = useRef()
@@ -53,7 +82,7 @@ const EnvironmentLayout = () => {
    const [busContent, setBusContent] = useState(null)
   const [trainContent, setTrainContent] = useState(null)
   // const [content, setContent] = useState([])
-  const [models, setModels] = useState(true)
+  const [models, setModels] = useState(false)
   // const handleSelectedContent = (value) => {
   //   setContent([...value])
   // }
@@ -90,8 +119,8 @@ const EnvironmentLayout = () => {
         onWheel={() => setLerping(false)}
       >
         <Suspense fallback={null}>
-          <color args={[0x10151c]} attach="background" />
-          <fog attach="fog" args={[0x10151c, 50, 120]} />
+          <color args={[0x24404e]} attach="background" />
+          <fog attach="fog" args={[0x24404e, 20, 100]} />
           {/* <CameraController ref={ref}/> */}
           <OrbitControls
             minDistance={5}
@@ -99,7 +128,7 @@ const EnvironmentLayout = () => {
             ref={ref}
             target={[0, 0.35, 0]}
           />
-          <PerspectiveCamera makeDefault fov={50} position={[3, 2, 5]} />
+          <PerspectiveCamera makeDefault fov={50} position={[0, 80, 0]} />
           <ambientLight intensity={0.1} />
           {/* <directionalLight
             // castShadow
@@ -120,7 +149,7 @@ const EnvironmentLayout = () => {
           <spotLight
             // color={[1, 0.25, 0.7]}
             color={[0.14, 0.5, 1]}
-            intensity={3}
+            intensity={5}
             angle={1}
             penumbra={0.6}
             position={[50, 40, 0]}
@@ -129,8 +158,9 @@ const EnvironmentLayout = () => {
             <Sphere />
           </spotLight>
           <spotLight
-            color={[0.14, 0.5, 1]}
-            intensity={3}
+          // color={[1, 0.25, 0.7]}
+            color={[0.14, 0.8, 1]}
+            intensity={5}
             angle={1}
             penumbra={0.6}
             position={[-50, 40, 0]}
@@ -143,13 +173,13 @@ const EnvironmentLayout = () => {
             {(texture) => (
               <>
                 <Environment map={texture} />
-                <Sphere position={[0, 1, 0]} args={[1, 256, 256]}>
+                {/* <Sphere position={[0, 1, 0]} args={[1, 256, 256]}>
                   <meshStandardMaterial
                     attach="material"
                     roughness={0}
                     metalness={1}
                   />
-                </Sphere>
+                </Sphere> */}
               </>
             )}
           </CubeCamera>

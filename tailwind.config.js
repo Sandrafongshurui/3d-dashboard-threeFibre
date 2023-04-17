@@ -5,22 +5,25 @@ module.exports = {
     extend: {
       keyframes: {
         'border-top-left-to-center': {
-          '0%': { left:"20px", width: '24px'},
-          '100%': { left:"95px", width: '50px'},
+          '0%': { left:"8px", width: '18px'},
+          '100%': { left:"50px", width: '60px'},
         },
         'border-top-center-to-left': {
-          '0%': { left:"95px", width: '50px'},
-          '100%': { left:"20px", width: '24px'},
+          '0%': { left:"50px", width: '60px'},
+          '100%': { left:"8px", width: '18px'},
         },
         'border-bottom-right-to-center': {
-          '0%': { right:"20px", width: '24px'},
-          '100%': { right:"95px", width: '50px'},
+          '0%': { right:"8px", width: '18px'},
+          '100%': { right:"50px", width: '60px'},
         },
         'border-bottom-center-to-right': {
-          '0%': { right:"95px", width: '50px'},
-          '100%': { right:"20px", width: '24px'},
+          '0%': { right:"50px", width: '60px'},
+          '100%': { right:"8px", width: '18px'},
         },
       },
+    },
+    fontFamily: {
+      alumni: ['Alumni Sans Pinstripe', 'sans-serif'],
     },
   },
   plugins: [],

@@ -9,6 +9,7 @@ const App = () => {
   return (
     <div className="App">
       <EnvironmentLayout/>
+      
      <EnterWorld/>
       
     </div>

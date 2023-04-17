@@ -39,14 +39,14 @@ const SurroundingCubes = (props) => {
     for (var i = 1; i < 150; i++) {
       console.log("loop")
       // console.log(geo)
-      const scaleY = 0.1 + Math.abs(mathRandom(20));
+      const scaleY = 0.1 + Math.abs(mathRandom(30));
       geo.push(
         <Box
           {...props}
           args={[1, 1, 1, segments, segments, segments]}
           scale-y={scaleY}
-          position-x={Math.round(mathRandom(12)) * 6}
-          position-z={Math.round(mathRandom(12)) * 6}
+          position-x={Math.round(mathRandom(12)) * 4}
+          position-z={Math.round(mathRandom(12)) * 4}
           position-y={scaleY / 2}
           key={i}
         >
