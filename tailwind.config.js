@@ -4,11 +4,21 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        'border-top-right': {
-          '0%': { width: '0px', height: '0px' },
-          '25%': { width: '240px', height: '0px' },
-          '50%': { width: '240px', height: '80px' },
-          '100%': { width: '240px', height: '80px' },
+        'border-top-left-to-center': {
+          '0%': { left:"20px", width: '24px'},
+          '100%': { left:"95px", width: '50px'},
+        },
+        'border-top-center-to-left': {
+          '0%': { left:"95px", width: '50px'},
+          '100%': { left:"20px", width: '24px'},
+        },
+        'border-bottom-right-to-center': {
+          '0%': { right:"20px", width: '24px'},
+          '100%': { right:"95px", width: '50px'},
+        },
+        'border-bottom-center-to-right': {
+          '0%': { right:"95px", width: '50px'},
+          '100%': { right:"20px", width: '24px'},
         },
       },
     },

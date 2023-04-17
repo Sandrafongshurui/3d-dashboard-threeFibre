@@ -1,28 +1,32 @@
 import { React, useState } from 'react'
 
 const EnterWorld = () => {
-    
-  const [hover, setHover] = useState('flex bg-blue-400 w-60 h-20 text-sm')
+  // const "absolute bg-transparent right-6 bottom-0 border-b-2 border-l-2 border-white animate-[border-bottom-right-to-center_ease-in-out_0.4s_1_forwards]"
+  const [enter, setEnter] = useState(false)
   const handleOnEnter = () => {
-    setHover(
-      hover +
-        'before:bg-transparent before:left-0 before:top-0 before:border-t-2 before:border-r-2 before:border-white before:animate-[border-top-right_3s_infinite_alternate]',
-    )
+    setEnter(true)
   }
-  const handleOnExit = () => {
-    setHover('flex bg-blue-400 w-60 h-20 text-sm')
+  const handleOnLeave = () => {
+    setEnter(false)
   }
   return (
-    <div className=" text-[35px] absolute top-[50%] left-[43%] text-white">
+    <div
+      onMouseEnter={handleOnEnter}
+      onMouseLeave={handleOnLeave}
+      className={
+        enter
+          ? 'absolute top-[50%] left-[43%] border-red-500/30 border text-white w-60 h-16 before:absolute before:bg-transparent before:left-6 before:top-[-1.5px] before:border-t-2 before:border-r-2 before:border-red-600 before:animate-[border-top-left-to-center_ease-in-out_0.4s_1_forwards]'
+          : 'absolute top-[50%] left-[43%] border-red-500/30 border text-white w-60 h-16 before:absolute before:bg-transparent before:left-6 before:top-[-1.5px] before:border-t-2 before:border-r-2 before:border-red-600 before:animate-[border-top-center-to-left_ease-in-out_0.4s_1_forwards]'
+      }
+    >
       <div
-        // onClick={handleOnClick}
-        onMouseEnter={handleOnEnter}
-        onMouseExit={handleOnExit}
-        className={hover}
-      >
-        {/* <div onClick={handleOnClick} className="w-60 h-20 text-sm hover:animate-[border-top-right_3s_infinite_alternate]"> */}
-      </div>
-      <p className="z-2 absolute top-0 text-center">Hello World</p>
+        className={
+          enter
+            ? 'absolute right-6 bottom-[-1.5px] border-b-2 border-r-2 border-red-500 animate-[border-bottom-right-to-center_ease-in-out_0.4s_1_forwards]'
+            : 'absolute right-6 bottom-[-1.5px] border-b-2 border-r-2 border-red-500 animate-[border-bottom-center-to-right_ease-in-out_0.4s_1_forwards]'
+        }
+      ></div>
+      <h1 className="py-[16px]">ENTER</h1>
     </div>
   )
 }
