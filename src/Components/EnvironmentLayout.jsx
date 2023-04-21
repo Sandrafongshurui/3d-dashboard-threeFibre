@@ -28,7 +28,7 @@ import SurroundingCubes from './SurroundingCubes'
 import Ground from './Ground'
 import { Water } from 'three-stdlib'
 import BusDataRows from './BusDataRows'
-import TrainDataRows from'./TrainDataRows'
+import TrainDataRows from './TrainDataRows'
 extend({ Water })
 
 //users camera to control
@@ -42,34 +42,34 @@ const Animate = ({ controls, lerping, to, target }) => {
   })
 }
 
-// const animate = () => {
-//   var time = Date.now() * 0.00005;
-//   requestAnimationFrame(animate);
-  
-//   city.rotation.y -= ((mouse.x * 8) - camera.rotation.y) * uSpeed;
-//   city.rotation.x -= (-(mouse.y * 2) - camera.rotation.x) * uSpeed;
-//   if (city.rotation.x < -0.05) city.rotation.x = -0.05;
-//   else if (city.rotation.x>1) city.rotation.x = 1;
-//   var cityRotation = Math.sin(Date.now() / 5000) * 13;
-//   //city.rotation.x = cityRotation * Math.PI / 180;
-  
-//   //console.log(city.rotation.x);
-//   //camera.position.y -= (-(mouse.y * 20) - camera.rotation.y) * uSpeed;;
-  
-//   // for ( let i = 0, l = town.children.length; i < l; i ++ ) {
-//   //   var object = town.children[ i ];
-//   //   //object.scale.y = Math.sin(time*50) * object.rotationValue;
-//   //   //object.rotation.y = (Math.sin((time/object.rotationValue) * Math.PI / 180) * 180);
-//   //   //object.rotation.z = (Math.cos((time/object.rotationValue) * Math.PI / 180) * 180);
-//   // }
-  
-//   smoke.rotation.y += 0.01;
-//   smoke.rotation.x += 0.01;
-  
-//   camera.lookAt(city.position);
-//   renderer.render( scene, camera );  
-// }
+const City = () => {
+  const { camera, mouse } = useThree()
+  // -= ((mouse.x * 8) - camera.rotation.y) * uSpeed
+  const [cityY, setCityY] = useState(0.1)
+  const [cityX, setCityX] = useState(0.1)
+  useFrame(({ camera }, delta) => {
+    if (cityY > -0.05) {
+      setCityY(cityY + mouse.x * 0.005)
+    } else {
+      setCityY(cityY - mouse.x * 0.005)
+    }
 
+    // if (cityX > 0.05) {
+    //   setCityX(cityX + mouse.y * 0.01)
+    // } 
+    // else if (cityX < 0){
+    //   setCityX(0)
+    // }
+  })
+  return (
+    <group rotation={[0, cityY, 0]}>
+      <SurroundingCubes scale={[4, 4, 4]} />
+      <Ground />
+      <gridHelper args={[200, 100, 0x00000, 0x10151c]} />;
+      <Ground />
+    </group>
+  )
+}
 
 const EnvironmentLayout = () => {
   const envMap = useEnvironment({ path: '/cubemap' })
@@ -77,15 +77,11 @@ const EnvironmentLayout = () => {
   const [lerping, setLerping] = useState(false)
   const [to, setTo] = useState()
   const [target, setTarget] = useState()
-  const [selected, setSelected] = useState(-1)
   const [openDashboard, setOpenDashboard] = useState(false)
-   const [busContent, setBusContent] = useState(null)
+  const [busContent, setBusContent] = useState(null)
   const [trainContent, setTrainContent] = useState(null)
-  // const [content, setContent] = useState([])
   const [models, setModels] = useState(false)
-  // const handleSelectedContent = (value) => {
-  //   setContent([...value])
-  // }
+
   const handleBusContent = (value) => {
     setBusContent([...value])
   }
@@ -109,6 +105,14 @@ const EnvironmentLayout = () => {
     setLerping(true)
     // setContent([...Object.entries(annotations[idx])]);
     handleClickMesh(true)
+  }
+  const handleOnMouseMove = (event) => {
+    event.preventDefault()
+    console.log('mouse moving')
+    // const mouse = new THREE.Vector2
+    // mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    // mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    // ref.rotation.y -= ((mouse.x * 8) - ref.rotation.y) * 2;
   }
 
   return (
@@ -158,7 +162,7 @@ const EnvironmentLayout = () => {
             <Sphere />
           </spotLight>
           <spotLight
-          // color={[1, 0.25, 0.7]}
+            // color={[1, 0.25, 0.7]}
             color={[0.14, 0.8, 1]}
             intensity={5}
             angle={1}
@@ -192,11 +196,14 @@ const EnvironmentLayout = () => {
               clickMesh={handleClickMesh}
             />
           )}
-          <SurroundingCubes scale={[4, 4, 4]} />
-          <Animate controls={ref} lerping={lerping} to={to} target={target} />
-          <Ground />
-          <gridHelper args={[200, 100, 0x00000, 0x10151c]} />;
-          <Ground />
+          <City />
+          <Animate
+            controls={ref}
+            lerping={lerping}
+            to={to}
+            target={target}
+          />
+
           {/* <Sky scale={10000} sunPosition={[500, 150, 1000]} turbidity={0.1} /> */}
         </Suspense>
       </Canvas>
@@ -206,7 +213,7 @@ const EnvironmentLayout = () => {
           <>
             <Dashboard
               headerName={'Bus Estimated Arrivals'}
-              subheadings={['Bus', 'Arr', 'Next', "Next"]}
+              subheadings={['Bus', 'Arr', 'Next', 'Next']}
             >
               <BusDataRows content={busContent} numOfCols={4} />
             </Dashboard>
