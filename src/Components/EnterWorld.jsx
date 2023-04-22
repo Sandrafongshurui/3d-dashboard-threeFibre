@@ -9,15 +9,19 @@ const EnterWorld = () => {
   const handleOnLeave = () => {
     setEnter(false)
   }
+  const handleOnClick=()=> {
+    
+  }
   return (
     <>
       <section className='top-[38%] left-[40%] absolute text-[60px] font-alumni text-white font-extrabold'>V  I  S  U  A  L  I  Z  E</section>
       <div
         onMouseEnter={handleOnEnter}
         onMouseLeave={handleOnLeave}
+        onClick={handleOnClick}
         className={
           enter
-            ? 'rounded-sm absolute top-[50%] left-[43%] border-red-500/30 border text-white/50 w-40 h-14 before:absolute before:bg-transparent before:left-6 before:top-[-1.5px] before:border-t-2 before:border-r-2 before:border-red-600 before:animate-[border-top-left-to-center_0.4s_1_forwards]'
+            ? 'cursor-pointer rounded-sm absolute top-[50%] left-[43%] border-red-500/30 border text-white/50 w-40 h-14 before:absolute before:bg-transparent before:left-6 before:top-[-1.5px] before:border-t-2 before:border-r-2 before:border-red-600 before:animate-[border-top-left-to-center_0.4s_1_forwards]'
             : 'rounded-sm absolute top-[50%] left-[43%] border-red-500/30 border text-white w-40 h-14 before:absolute before:bg-transparent before:left-6 before:top-[-1.5px] before:border-t-2 before:border-r-2 before:border-red-600 before:animate-[border-top-center-to-left_0.4s_1_forwards]'
         }
       >
