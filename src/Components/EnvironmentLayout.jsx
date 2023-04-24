@@ -6,6 +6,7 @@ import {
   extend,
 } from '@react-three/fiber'
 import * as THREE from 'three'
+import EnterWorld from './EnterWorld'
 import {
   OrbitControls,
   PerspectiveCamera,
@@ -28,6 +29,9 @@ import SurroundingCubes from './SurroundingCubes'
 import Ground from './Ground'
 import { Water } from 'three-stdlib'
 import BusDataRows from './BusDataRows'
+import { Parallax } from 'react-scroll-parallax'
+import { useParallax } from 'react-scroll-parallax'
+import { ParallaxProvider } from 'react-scroll-parallax'
 import TrainDataRows from './TrainDataRows'
 extend({ Water })
 
@@ -43,20 +47,25 @@ const Animate = ({ controls, lerping, to, target }) => {
 }
 
 const City = () => {
-  const { camera, mouse } = useThree()
+  
   // -= ((mouse.x * 8) - camera.rotation.y) * uSpeed
   const [cityY, setCityY] = useState(0.1)
   const [cityX, setCityX] = useState(0.1)
   useFrame(({ camera }, delta) => {
+    // if (cityY > -0.05) {
+    //   setCityY(cityY + mouse.x * 0.001)
+    // } else {
+    //   setCityY(cityY - mouse.x * 0.001)
+    // }
     if (cityY > -0.05) {
-      setCityY(cityY + mouse.x * 0.005)
+      setCityY(cityY +  0.001)
     } else {
-      setCityY(cityY - mouse.x * 0.005)
+      setCityY(cityY -0.001)
     }
 
     // if (cityX > 0.05) {
     //   setCityX(cityX + mouse.y * 0.01)
-    // } 
+    // }
     // else if (cityX < 0){
     //   setCityX(0)
     // }
@@ -71,8 +80,9 @@ const City = () => {
   )
 }
 
-const EnvironmentLayout = () => {
+const EnvironmentLayout = (mouse) => {
   const envMap = useEnvironment({ path: '/cubemap' })
+  const [movingMouse, setMovingMouse] = useState(null)
   const ref = useRef()
   const [lerping, setLerping] = useState(false)
   const [to, setTo] = useState()
@@ -81,6 +91,7 @@ const EnvironmentLayout = () => {
   const [busContent, setBusContent] = useState(null)
   const [trainContent, setTrainContent] = useState(null)
   const [models, setModels] = useState(false)
+  const { reFParallax } = useParallax < HTMLDivElement > { speed: 10 }
 
   const handleBusContent = (value) => {
     setBusContent([...value])
@@ -109,9 +120,10 @@ const EnvironmentLayout = () => {
   const handleOnMouseMove = (event) => {
     event.preventDefault()
     console.log('mouse moving')
-    // const mouse = new THREE.Vector2
-    // mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    // mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    const mouse = new THREE.Vector2
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    setMovingMouse(mouse)
     // ref.rotation.y -= ((mouse.x * 8) - ref.rotation.y) * 2;
   }
 
@@ -121,6 +133,9 @@ const EnvironmentLayout = () => {
         shadows
         onPointerDown={() => setLerping(false)}
         onWheel={() => setLerping(false)}
+        // eventSource={document.getElementById('root')}
+        // eventPrefix="client"
+        // onPointerMove={handleOnMouseMove}
       >
         <Suspense fallback={null}>
           <color args={[0x24404e]} attach="background" />
@@ -129,7 +144,7 @@ const EnvironmentLayout = () => {
           <OrbitControls
             minDistance={5}
             maxDistance={80}
-            ref={ref}
+            // ref={ref}
             target={[0, 0.35, 0]}
           />
           <PerspectiveCamera makeDefault fov={50} position={[0, 80, 0]} />
@@ -196,38 +211,14 @@ const EnvironmentLayout = () => {
               clickMesh={handleClickMesh}
             />
           )}
-          <City />
-          <Animate
-            controls={ref}
-            lerping={lerping}
-            to={to}
-            target={target}
-          />
+          
+          <City mouse={movingMouse}/>
+          <Animate controls={ref} lerping={lerping} to={to} target={target} />
 
           {/* <Sky scale={10000} sunPosition={[500, 150, 1000]} turbidity={0.1} /> */}
         </Suspense>
       </Canvas>
-
-      <section className="absolute top-0 m-6 gap-5 flex flex-col">
-        {openDashboard && (
-          <>
-            <Dashboard
-              headerName={'Bus Estimated Arrivals'}
-              subheadings={['Bus', 'Arr', 'Next', 'Next']}
-            >
-              <BusDataRows content={busContent} numOfCols={4} />
-            </Dashboard>
-            <Dashboard
-              headerName={'Train Estimated Arrivals'}
-              subheadings={['Name', 'Station', 'Line', 'Crowd']}
-            >
-              <TrainDataRows content={trainContent} numOfCols={4} />
-            </Dashboard>
-          </>
-        )}
-      </section>
-
-      <button onClick={handleOnClick}>Close</button>
+      {/* <EnterWorld /> */}
     </React.Fragment>
   )
 }
