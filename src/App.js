@@ -18,6 +18,9 @@ const App = () => {
         <EnvironmentLayout />
       </div>
       <EnterWorld scroll={scroll} />
+      {/* <div className='absolute'>
+      next
+      </div> */}
     </>
   )
 }
